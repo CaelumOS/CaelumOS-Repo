@@ -11,9 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger parent repo workflow
+        env:
+          GH_TOKEN: ${{ secrets.NOTIFY_TOKEN }}
         run: |
-          curl -X POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/ayakaOS/ayakaOS.github.io/dispatches \
-            -d '{"event_type":"ayakaOS-repo-updated"}'
+            gh workflow run clone-repo.yml -R ayakaOS/ayakaOS.github.io
